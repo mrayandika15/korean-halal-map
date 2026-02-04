@@ -1,0 +1,1154 @@
+{
+  "project": "Halal Korea MVP",
+  "generated": "2026-02-04",
+  "sources": [
+    "frontend-plan.md",
+    "backend-plan.md",
+    "ui-ux-plan.md"
+  ],
+  "phases": [
+    {
+      "id": "phase-0",
+      "name": "Foundation",
+      "tasks": [
+        {
+          "id": "0.1",
+          "name": "Initialize shadcn/ui",
+          "source": "frontend-plan.md",
+          "priority": "critical",
+          "dependencies": [],
+          "passed": true,
+          "expectedOutput": [
+            "shadcn/ui initialized in the project",
+            "components.json configuration file created",
+            "Tailwind CSS configured with shadcn defaults",
+            "src/components/ui/ directory structure created"
+          ],
+          "behavior": [
+            "shadcn components can be added via CLI",
+            "Tailwind utility classes work correctly",
+            "CSS variables for theming are available"
+          ],
+          "stepsToReproduce": [
+            "Run npx shadcn@latest init",
+            "Select default options (New York style, CSS variables)",
+            "Verify components.json exists at project root",
+            "Verify src/components/ui/ directory exists",
+            "Verify tailwind.config.ts has shadcn presets"
+          ]
+        },
+        {
+          "id": "0.2",
+          "name": "Install shadcn Components",
+          "source": "frontend-plan.md",
+          "priority": "critical",
+          "dependencies": ["0.1"],
+          "passed": true,
+          "expectedOutput": [
+            "Components installed: button, card, input, badge, dialog, drawer, select, skeleton, tabs, toggle, tooltip, scroll-area, separator, sheet, sonner",
+            "All component files in src/components/ui/"
+          ],
+          "behavior": [
+            "Components importable from @/components/ui/[name]",
+            "Components render with default shadcn styling"
+          ],
+          "stepsToReproduce": [
+            "Run npx shadcn@latest add button card input badge dialog drawer select skeleton tabs toggle tooltip scroll-area separator sheet sonner",
+            "Verify each component file exists in src/components/ui/",
+            "Import and render Button component in a test page",
+            "Verify it renders correctly with styling"
+          ]
+        },
+        {
+          "id": "0.3",
+          "name": "Configure Design System CSS Variables",
+          "source": "ui-ux-plan.md",
+          "priority": "critical",
+          "dependencies": ["0.1"],
+          "passed": true,
+          "expectedOutput": [
+            "File: src/app/globals.css with design tokens",
+            "Brand colors defined (Primary Emerald #059669)",
+            "Halal status colors defined",
+            "Typography scale configured",
+            "Spacing and radius variables set"
+          ],
+          "behavior": [
+            "Primary color passes WCAG 4.5:1 contrast ratio",
+            "CSS variables available globally via var(--color-name)",
+            "Dark mode variables defined (for future use)"
+          ],
+          "stepsToReproduce": [
+            "Open src/app/globals.css",
+            "Verify CSS variables match ui-ux-plan.md specifications",
+            "Check --primary: 142.1 76.2% 36.3% (Emerald 600)",
+            "Verify halal status colors: --halal-certified, --muslim-friendly, etc.",
+            "Run contrast checker on primary vs white (target: 4.5:1+)"
+          ]
+        },
+        {
+          "id": "0.4",
+          "name": "Install Core Dependencies",
+          "source": "frontend-plan.md",
+          "priority": "critical",
+          "dependencies": [],
+          "passed": true,
+          "expectedOutput": [
+            "Dependencies installed: zustand, swr, @supabase/supabase-js, maplibre-gl",
+            "Dev dependencies: @types/maplibre-gl",
+            "KMZ parsing: fflate, fast-xml-parser",
+            "All packages in package.json"
+          ],
+          "behavior": [
+            "Packages importable without errors",
+            "TypeScript types available for maplibre-gl"
+          ],
+          "stepsToReproduce": [
+            "Run bun add zustand swr @supabase/supabase-js maplibre-gl fflate fast-xml-parser",
+            "Run bun add -D @types/maplibre-gl",
+            "Verify packages in package.json dependencies",
+            "Import each package in a test file to verify no errors"
+          ]
+        },
+        {
+          "id": "0.5",
+          "name": "Configure next.config.ts",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.4"],
+          "passed": true,
+          "expectedOutput": [
+            "File: next.config.ts with optimizePackageImports",
+            "lucide-react added to optimizePackageImports"
+          ],
+          "behavior": [
+            "Icon imports are tree-shaken",
+            "Bundle size optimized for lucide-react"
+          ],
+          "stepsToReproduce": [
+            "Open next.config.ts",
+            "Verify experimental.optimizePackageImports: ['lucide-react']",
+            "Build the project with bun run build",
+            "Verify no bundle size warnings for lucide-react"
+          ]
+        },
+        {
+          "id": "0.6",
+          "name": "Create Project Directory Structure",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": [],
+          "passed": true,
+          "expectedOutput": [
+            "Directory: src/features/restaurants/ (api, components, hooks, stores, types)",
+            "Directory: src/features/map/ (components, hooks, types)",
+            "Directory: src/features/favorites/ (api, components, hooks, types)",
+            "Directory: src/features/ratings/ (api, components, hooks, types)",
+            "Directory: src/components/layouts/",
+            "Directory: src/components/common/",
+            "Directory: src/lib/",
+            "Directory: src/hooks/",
+            "Directory: src/stores/",
+            "Directory: src/types/",
+            "Directory: src/data/"
+          ],
+          "behavior": [
+            "Feature-based architecture is established",
+            "Import aliases work correctly (@/features, @/components, etc.)"
+          ],
+          "stepsToReproduce": [
+            "Create all directories as listed",
+            "Add a test file to each feature folder",
+            "Verify imports with @ alias work"
+          ]
+        },
+        {
+          "id": "0.7",
+          "name": "Create TypeScript Type Definitions",
+          "source": "backend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.6"],
+          "passed": true,
+          "expectedOutput": [
+            "File: src/types/restaurant.ts with Restaurant, PlaceCategory, HalalStatus types",
+            "File: src/types/database.ts with Supabase generated types"
+          ],
+          "behavior": [
+            "Types are correctly exported and importable",
+            "Restaurant type matches KMZ data structure"
+          ],
+          "stepsToReproduce": [
+            "Open src/types/restaurant.ts",
+            "Verify PlaceCategory union type includes: restaurant, mosque, accommodation, grocery, other",
+            "Verify HalalStatus union type includes: halal_certified, muslim_friendly, partially_halal, seafood_only, vegetarian, unknown",
+            "Verify Restaurant interface has all required fields",
+            "Import types in a test file"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-1",
+      "name": "Backend Core",
+      "tasks": [
+        {
+          "id": "1.1",
+          "name": "Create KMZ Parser Script",
+          "source": "backend-plan.md",
+          "priority": "critical",
+          "dependencies": ["0.4", "0.7"],
+          "passed": true,
+          "expectedOutput": [
+            "File: scripts/parse-kmz.ts",
+            "Parses docs/geo.kmz into JSON",
+            "Outputs to src/data/restaurants.ts and public/data/restaurants.geojson"
+          ],
+          "behavior": [
+            "Extracts ~1,868 placemarks from KMZ",
+            "Parses description fields for halal status, address, phone",
+            "Generates unique IDs for each restaurant",
+            "Creates GeoJSON for map rendering"
+          ],
+          "stepsToReproduce": [
+            "Run bun run scripts/parse-kmz.ts",
+            "Verify src/data/restaurants.ts exists with restaurant array",
+            "Verify public/data/restaurants.geojson exists",
+            "Check restaurant count is approximately 1,868",
+            "Verify sample restaurant has: id, name, latitude, longitude, halalStatus"
+          ]
+        },
+        {
+          "id": "1.2",
+          "name": "Create Supabase Migration - Initial Schema",
+          "source": "backend-plan.md",
+          "priority": "critical",
+          "dependencies": [],
+          "passed": true,
+          "expectedOutput": [
+            "File: supabase/migrations/001_initial_schema.sql",
+            "Tables: devices, favorites, ratings",
+            "Indexes on device_id and restaurant_id columns",
+            "Unique constraints for device+restaurant combinations"
+          ],
+          "behavior": [
+            "Migration runs without errors on Supabase",
+            "Tables created with correct column types",
+            "bigint identity PKs, text for device_id/restaurant_id",
+            "CHECK constraint on ratings (1-5)"
+          ],
+          "stepsToReproduce": [
+            "Run supabase db push (or apply migration)",
+            "Query SELECT * FROM information_schema.tables WHERE table_schema = 'public'",
+            "Verify tables: devices, favorites, ratings exist",
+            "Verify ratings.rating has CHECK constraint",
+            "Verify indexes exist on device_id and restaurant_id"
+          ]
+        },
+        {
+          "id": "1.3",
+          "name": "Create Supabase Migration - RLS Policies",
+          "source": "backend-plan.md",
+          "priority": "critical",
+          "dependencies": ["1.2"],
+          "passed": true,
+          "expectedOutput": [
+            "File: supabase/migrations/002_rls_policies.sql",
+            "Helper function: public.get_device_id()",
+            "RLS policies for devices, favorites, ratings tables",
+            "Policies use (SELECT public.get_device_id()) pattern"
+          ],
+          "behavior": [
+            "Devices can only access their own data",
+            "Insert allowed for any device_id",
+            "Select/Update/Delete restricted to own device_id",
+            "Anonymous (anon) role has appropriate access"
+          ],
+          "stepsToReproduce": [
+            "Apply migration",
+            "Insert a favorite with device_id 'test-device-1'",
+            "Set header x-device-id: 'test-device-1' and query favorites",
+            "Verify own favorite is returned",
+            "Set header x-device-id: 'other-device' and query favorites",
+            "Verify no results returned (RLS blocks access)"
+          ]
+        },
+        {
+          "id": "1.4",
+          "name": "Create Supabase Migration - Restaurant Stats View",
+          "source": "backend-plan.md",
+          "priority": "medium",
+          "dependencies": ["1.2"],
+          "passed": true,
+          "expectedOutput": [
+            "File: supabase/migrations/003_restaurant_stats_view.sql",
+            "Materialized view: public.restaurant_stats",
+            "Columns: restaurant_id, favorite_count, average_rating, rating_count",
+            "Unique index on restaurant_id",
+            "Public read access granted to anon"
+          ],
+          "behavior": [
+            "Aggregates favorite and rating counts per restaurant",
+            "Average rating calculated with 2 decimal precision",
+            "Can be refreshed with REFRESH MATERIALIZED VIEW"
+          ],
+          "stepsToReproduce": [
+            "Apply migration",
+            "Insert test favorites and ratings",
+            "Run REFRESH MATERIALIZED VIEW CONCURRENTLY public.restaurant_stats",
+            "Query stats view",
+            "Verify aggregated values match inserted data"
+          ]
+        },
+        {
+          "id": "1.5",
+          "name": "Set Up Supabase Client",
+          "source": "backend-plan.md",
+          "priority": "critical",
+          "dependencies": ["0.4"],
+          "passed": true,
+          "expectedOutput": [
+            "File: src/lib/supabase.ts (or src/lib/supabase/client.ts)",
+            "Supabase client configured with environment variables",
+            "Custom header for x-device-id"
+          ],
+          "behavior": [
+            "Client connects to Supabase project",
+            "Device ID passed in headers for RLS",
+            "TypeScript types applied to client"
+          ],
+          "stepsToReproduce": [
+            "Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local",
+            "Import supabase client",
+            "Run a test query (e.g., supabase.from('devices').select())",
+            "Verify connection works (may return empty array)"
+          ]
+        },
+        {
+          "id": "1.6",
+          "name": "Create Device ID Management",
+          "source": "backend-plan.md",
+          "priority": "high",
+          "dependencies": ["1.5"],
+          "passed": true,
+          "expectedOutput": [
+            "File: src/lib/device.ts",
+            "Function: getOrCreateDeviceId() using localStorage",
+            "localStorage key: 'halal_korea_device_id'"
+          ],
+          "behavior": [
+            "Generates UUID on first visit",
+            "Persists device ID in localStorage",
+            "Returns existing ID on subsequent visits"
+          ],
+          "stepsToReproduce": [
+            "Clear localStorage",
+            "Call getOrCreateDeviceId()",
+            "Verify UUID is generated and stored",
+            "Call again, verify same UUID returned",
+            "Check localStorage for 'halal_korea_device_id' key"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "UI Components",
+      "tasks": [
+        {
+          "id": "2.1",
+          "name": "Create Layout Components",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/components/layouts/app-shell.tsx",
+            "File: src/components/layouts/mobile-header.tsx",
+            "Props defined per frontend-plan.md"
+          ],
+          "behavior": [
+            "AppShell wraps content with header/footer slots",
+            "MobileHeader displays title, menu button, right action",
+            "Header is sticky with backdrop blur"
+          ],
+          "stepsToReproduce": [
+            "Import AppShell in a test page",
+            "Render with children content",
+            "Verify layout structure (flex column, min-h-screen)",
+            "Render MobileHeader with title prop",
+            "Verify sticky positioning and styling"
+          ]
+        },
+        {
+          "id": "2.2",
+          "name": "Create Common Components",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/components/common/halal-status-badge.tsx",
+            "File: src/components/common/loading-spinner.tsx",
+            "File: src/components/common/empty-state.tsx",
+            "File: src/components/common/error-boundary.tsx"
+          ],
+          "behavior": [
+            "HalalStatusBadge shows colored badge based on status",
+            "LoadingSpinner shows animated spinner",
+            "EmptyState shows message with optional action",
+            "ErrorBoundary catches and displays errors"
+          ],
+          "stepsToReproduce": [
+            "Render HalalStatusBadge with status='halal_certified'",
+            "Verify green badge with 'Halal Certified' text",
+            "Render HalalStatusBadge with status='muslim_friendly'",
+            "Verify amber badge with 'Muslim Friendly' text",
+            "Render LoadingSpinner, verify animation",
+            "Render EmptyState with title and action, verify layout"
+          ]
+        },
+        {
+          "id": "2.3",
+          "name": "Create Filter Store",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.4"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/stores/filter-store.ts",
+            "Zustand store with filters state",
+            "Actions: setFilter, resetFilters",
+            "Default filters: query='', category='all', halalStatus='all', city='all'"
+          ],
+          "behavior": [
+            "Store persists filter state across components",
+            "setFilter updates individual filter",
+            "resetFilters restores defaults"
+          ],
+          "stepsToReproduce": [
+            "Import useFilterStore in a test component",
+            "Read initial filters state",
+            "Verify default values",
+            "Call setFilter('query', 'test')",
+            "Verify query updated",
+            "Call resetFilters()",
+            "Verify defaults restored"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Features",
+      "tasks": [
+        {
+          "id": "3.1",
+          "name": "Create Restaurant Card Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["2.2", "0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/components/restaurant-card.tsx",
+            "Uses Card, Badge from shadcn",
+            "Props: restaurant, distance?, onSelect, isFavorite?",
+            "Memoized with React.memo"
+          ],
+          "behavior": [
+            "Displays restaurant name, halal status badge, address/city",
+            "Shows distance if provided",
+            "Shows favorite icon state",
+            "Clickable with hover effect"
+          ],
+          "stepsToReproduce": [
+            "Import RestaurantCard",
+            "Render with mock restaurant data",
+            "Verify name, badge, and address display",
+            "Verify distance shows if provided",
+            "Click card, verify onSelect called",
+            "Verify hover shadow effect"
+          ]
+        },
+        {
+          "id": "3.2",
+          "name": "Create Restaurant List Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["3.1"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/components/restaurant-list.tsx",
+            "Uses ScrollArea from shadcn",
+            "Props: restaurants, onSelectRestaurant, isLoading"
+          ],
+          "behavior": [
+            "Renders list of RestaurantCard components",
+            "Shows skeleton loading state when isLoading",
+            "Handles empty state with EmptyState component",
+            "Scrollable within container"
+          ],
+          "stepsToReproduce": [
+            "Render RestaurantList with mock restaurants array",
+            "Verify cards rendered for each restaurant",
+            "Scroll list, verify scroll behavior",
+            "Render with isLoading=true, verify skeletons",
+            "Render with empty array, verify empty state"
+          ]
+        },
+        {
+          "id": "3.3",
+          "name": "Create Restaurant Search Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/components/restaurant-search.tsx",
+            "Uses Input from shadcn",
+            "Props: value, onChange, placeholder",
+            "Debounced input (300ms)"
+          ],
+          "behavior": [
+            "Shows search icon and clear button",
+            "Debounces onChange calls",
+            "Clear button resets input"
+          ],
+          "stepsToReproduce": [
+            "Render RestaurantSearch",
+            "Type 'test' in input",
+            "Verify onChange called after 300ms debounce",
+            "Click clear button",
+            "Verify input cleared and onChange called with ''"
+          ]
+        },
+        {
+          "id": "3.4",
+          "name": "Create Restaurant Filters Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/components/restaurant-filters.tsx",
+            "Uses Select, Drawer from shadcn",
+            "Props: filters, onChange, cities"
+          ],
+          "behavior": [
+            "Dropdowns for category, halal status, city",
+            "Mobile: Opens in Drawer",
+            "Desktop: Inline dropdowns"
+          ],
+          "stepsToReproduce": [
+            "Render RestaurantFilters with cities list",
+            "Select a category filter",
+            "Verify onChange called with updated filters",
+            "Select halal status filter",
+            "Verify onChange called",
+            "On mobile viewport, verify Drawer behavior"
+          ]
+        },
+        {
+          "id": "3.5",
+          "name": "Create Restaurant Detail Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["2.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/components/restaurant-detail.tsx",
+            "Props: restaurant, onClose",
+            "Shows full restaurant information"
+          ],
+          "behavior": [
+            "Displays name, halal status badge, address, phone",
+            "Shows opening hours if available",
+            "Navigation and call buttons",
+            "Close button triggers onClose"
+          ],
+          "stepsToReproduce": [
+            "Render RestaurantDetail with mock restaurant",
+            "Verify all fields display correctly",
+            "Click close button, verify onClose called",
+            "Click navigate button, verify external link opens",
+            "Verify phone number is clickable (tel: link)"
+          ]
+        },
+        {
+          "id": "3.6",
+          "name": "Create useRestaurants Hook",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["1.1"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/api/queries.ts",
+            "Hook: useRestaurants(filters, userLocation?)",
+            "Returns: { data, total, cities }"
+          ],
+          "behavior": [
+            "Filters restaurants by query, category, status, city",
+            "Sorts by distance if userLocation provided",
+            "Returns unique cities for filter dropdown"
+          ],
+          "stepsToReproduce": [
+            "Import useRestaurants hook",
+            "Call with default filters",
+            "Verify all restaurants returned",
+            "Call with query filter",
+            "Verify filtered results",
+            "Call with userLocation",
+            "Verify sorted by distance"
+          ]
+        },
+        {
+          "id": "3.7",
+          "name": "Create useUserLocation Hook",
+          "source": "frontend-plan.md",
+          "priority": "medium",
+          "dependencies": [],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/restaurants/hooks/use-user-location.ts",
+            "Returns: { latitude, longitude, error, loading }"
+          ],
+          "behavior": [
+            "Requests geolocation permission",
+            "Returns coordinates on success",
+            "Returns error on failure/denial",
+            "Loading state while requesting"
+          ],
+          "stepsToReproduce": [
+            "Import useUserLocation hook",
+            "Call hook in component",
+            "Verify loading state initially true",
+            "Accept location permission",
+            "Verify coordinates returned",
+            "Deny permission, verify error state"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Map Feature",
+      "tasks": [
+        {
+          "id": "4.1",
+          "name": "Create MapView Component (Dynamic Import)",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.4"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/map/components/map-view.tsx (wrapper with dynamic import)",
+            "File: src/features/map/components/map-view-client.tsx (actual map)",
+            "Dynamic import with SSR disabled"
+          ],
+          "behavior": [
+            "MapLibre loaded only on client",
+            "Shows skeleton while loading",
+            "Map renders with default Korea center"
+          ],
+          "stepsToReproduce": [
+            "Import MapView component",
+            "Render on a page",
+            "Verify skeleton shows initially",
+            "Verify map loads after hydration",
+            "Verify no SSR errors"
+          ]
+        },
+        {
+          "id": "4.2",
+          "name": "Create useMap Hook",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.4"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/map/hooks/use-map.ts",
+            "Returns: { map, flyTo, fitBounds }",
+            "Uses CartoDB positron style"
+          ],
+          "behavior": [
+            "Initializes MapLibre map on mount",
+            "Cleans up on unmount",
+            "flyTo animates to location",
+            "fitBounds fits markers in view"
+          ],
+          "stepsToReproduce": [
+            "Use hook with container ref",
+            "Verify map initializes",
+            "Call flyTo with coordinates",
+            "Verify map animates to location",
+            "Unmount component, verify cleanup"
+          ]
+        },
+        {
+          "id": "4.3",
+          "name": "Create useMapMarkers Hook",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["4.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/map/hooks/use-map-markers.ts",
+            "Adds GeoJSON source and layers to map",
+            "Clustering enabled",
+            "Click handler for markers"
+          ],
+          "behavior": [
+            "Clusters markers when zoomed out",
+            "Different colors per halal status",
+            "Click triggers onMarkerClick callback"
+          ],
+          "stepsToReproduce": [
+            "Pass map instance and GeoJSON data",
+            "Verify markers appear on map",
+            "Zoom out, verify clustering",
+            "Click on marker",
+            "Verify callback called with restaurant ID"
+          ]
+        },
+        {
+          "id": "4.4",
+          "name": "Create MapPopup Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["4.1"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/map/components/map-popup.tsx",
+            "Props: restaurant, onViewDetails",
+            "Uses Card from shadcn"
+          ],
+          "behavior": [
+            "Shows restaurant name, badge, distance",
+            "View Details button triggers onViewDetails",
+            "Styled per ui-ux-plan wireframes"
+          ],
+          "stepsToReproduce": [
+            "Render MapPopup with mock restaurant",
+            "Verify name and badge display",
+            "Click View Details button",
+            "Verify onViewDetails called"
+          ]
+        },
+        {
+          "id": "4.5",
+          "name": "Create MapControls Component",
+          "source": "frontend-plan.md",
+          "priority": "medium",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/map/components/map-controls.tsx",
+            "Props: onLocate, onZoomIn, onZoomOut",
+            "Zoom and locate buttons"
+          ],
+          "behavior": [
+            "Zoom in/out buttons call respective callbacks",
+            "Locate button triggers user location"
+          ],
+          "stepsToReproduce": [
+            "Render MapControls",
+            "Click zoom in button, verify callback",
+            "Click zoom out button, verify callback",
+            "Click locate button, verify callback"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Favorites and Ratings",
+      "tasks": [
+        {
+          "id": "5.1",
+          "name": "Create useFavorites Hook",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["1.5", "1.6"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/favorites/api/queries.ts",
+            "Hook: useFavorites(userId)",
+            "Uses SWR for caching and deduplication"
+          ],
+          "behavior": [
+            "Fetches user's favorites from Supabase",
+            "Returns array of restaurant IDs",
+            "Revalidates on mutation"
+          ],
+          "stepsToReproduce": [
+            "Import useFavorites hook",
+            "Call with device ID",
+            "Verify Supabase query executed",
+            "Add a favorite via Supabase",
+            "Verify hook returns updated list"
+          ]
+        },
+        {
+          "id": "5.2",
+          "name": "Create FavoriteButton Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["5.1"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/favorites/components/favorite-button.tsx",
+            "Props: restaurantId, isFavorite, onToggle",
+            "Heart icon with fill state"
+          ],
+          "behavior": [
+            "Filled heart when favorited",
+            "Empty heart when not favorited",
+            "Toggle on click with animation",
+            "Optimistic update"
+          ],
+          "stepsToReproduce": [
+            "Render FavoriteButton with isFavorite=false",
+            "Verify empty heart icon",
+            "Click button",
+            "Verify heart fills (animation)",
+            "Verify onToggle called"
+          ]
+        },
+        {
+          "id": "5.3",
+          "name": "Create useRatings Hook",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["1.5"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/ratings/api/queries.ts",
+            "Hooks: useRatings(restaurantId), useUserRating(userId, restaurantId), useRatingMutation"
+          ],
+          "behavior": [
+            "useRatings returns average and count",
+            "useUserRating returns user's rating (or null)",
+            "Mutation upserts rating"
+          ],
+          "stepsToReproduce": [
+            "Call useRatings with restaurant ID",
+            "Verify returns { average: 0, total: 0 } initially",
+            "Add rating via mutation",
+            "Verify useRatings returns updated average"
+          ]
+        },
+        {
+          "id": "5.4",
+          "name": "Create StarRating Component",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": [],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/ratings/components/star-rating.tsx",
+            "Props: value, onChange?, readonly?, size?",
+            "Interactive or display-only mode"
+          ],
+          "behavior": [
+            "Shows 5 stars",
+            "Filled stars based on value",
+            "Interactive mode allows clicking stars",
+            "Animation on star selection"
+          ],
+          "stepsToReproduce": [
+            "Render StarRating with value=3",
+            "Verify 3 stars filled",
+            "Render with onChange prop",
+            "Click 4th star",
+            "Verify onChange called with 4"
+          ]
+        },
+        {
+          "id": "5.5",
+          "name": "Create RatingSummary Component",
+          "source": "frontend-plan.md",
+          "priority": "medium",
+          "dependencies": ["5.4"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/features/ratings/components/rating-summary.tsx",
+            "Props: averageRating, totalRatings",
+            "Shows average and count"
+          ],
+          "behavior": [
+            "Displays star rating visually",
+            "Shows average number (e.g., '4.2')",
+            "Shows total count (e.g., '23 ratings')"
+          ],
+          "stepsToReproduce": [
+            "Render RatingSummary with averageRating=4.2, totalRatings=23",
+            "Verify stars display 4.2/5",
+            "Verify '4.2' text displayed",
+            "Verify '23 ratings' text displayed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-6",
+      "name": "Integration",
+      "tasks": [
+        {
+          "id": "6.1",
+          "name": "Create Home Page",
+          "source": "frontend-plan.md",
+          "priority": "critical",
+          "dependencies": ["3.2", "4.1", "2.1"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/app/page.tsx",
+            "Split layout: List panel + Map panel",
+            "Mobile: 50/50 vertical split",
+            "Desktop: List (400px) + Map (flexible)"
+          ],
+          "behavior": [
+            "Loads restaurants from static data",
+            "List and map show same data",
+            "Search/filter updates both views",
+            "Selecting restaurant highlights on map"
+          ],
+          "stepsToReproduce": [
+            "Navigate to /",
+            "Verify list of restaurants displays",
+            "Verify map displays with markers",
+            "Search for a restaurant",
+            "Verify both list and map update",
+            "Click restaurant card",
+            "Verify marker highlighted on map"
+          ]
+        },
+        {
+          "id": "6.2",
+          "name": "Create Restaurant Detail Page/Sheet",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["3.5", "5.2", "5.4"],
+          "passed": false,
+          "expectedOutput": [
+            "File: src/app/restaurant/[id]/page.tsx OR Sheet component",
+            "Integrates favorites and ratings"
+          ],
+          "behavior": [
+            "Displays full restaurant details",
+            "Favorite button toggles favorite state",
+            "Star rating allows user rating",
+            "Navigate button opens external maps"
+          ],
+          "stepsToReproduce": [
+            "Navigate to restaurant detail (via card click or URL)",
+            "Verify all restaurant info displays",
+            "Click favorite button, verify toggle",
+            "Rate restaurant, verify saved",
+            "Click navigate, verify external app opens"
+          ]
+        },
+        {
+          "id": "6.3",
+          "name": "Connect Supabase to UI",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["5.1", "5.3", "1.6"],
+          "passed": false,
+          "expectedOutput": [
+            "Favorites persisted to Supabase",
+            "Ratings persisted to Supabase",
+            "Device ID passed in all requests"
+          ],
+          "behavior": [
+            "Favoriting a restaurant saves to Supabase",
+            "Rating updates/creates in Supabase",
+            "Data persists across sessions"
+          ],
+          "stepsToReproduce": [
+            "Favorite a restaurant",
+            "Refresh page",
+            "Verify favorite still shown",
+            "Rate a restaurant",
+            "Refresh page",
+            "Verify rating persisted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-7",
+      "name": "Polish",
+      "tasks": [
+        {
+          "id": "7.1",
+          "name": "Add Loading States",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "Skeleton loading for restaurant list",
+            "Skeleton loading for restaurant detail",
+            "Map loading indicator",
+            "Button loading states"
+          ],
+          "behavior": [
+            "Skeletons match content layout",
+            "Shimmer animation on skeletons",
+            "Loading states prevent double-clicks"
+          ],
+          "stepsToReproduce": [
+            "Throttle network in DevTools",
+            "Navigate to home page",
+            "Verify skeleton cards display while loading",
+            "Click restaurant, verify detail skeleton",
+            "Verify map shows loading state"
+          ]
+        },
+        {
+          "id": "7.2",
+          "name": "Add Toast Notifications",
+          "source": "frontend-plan.md",
+          "priority": "medium",
+          "dependencies": ["0.2"],
+          "passed": false,
+          "expectedOutput": [
+            "Sonner toasts integrated",
+            "Toast on favorite added/removed",
+            "Toast on rating submitted",
+            "Toast on errors"
+          ],
+          "behavior": [
+            "Toasts appear from bottom",
+            "Auto-dismiss after 3 seconds",
+            "Can be manually dismissed"
+          ],
+          "stepsToReproduce": [
+            "Favorite a restaurant",
+            "Verify 'Saved to favorites' toast",
+            "Unfavorite",
+            "Verify 'Removed from favorites' toast",
+            "Rate restaurant",
+            "Verify 'Thanks for rating!' toast"
+          ]
+        },
+        {
+          "id": "7.3",
+          "name": "Add Error Handling",
+          "source": "frontend-plan.md",
+          "priority": "high",
+          "dependencies": ["2.2"],
+          "passed": false,
+          "expectedOutput": [
+            "Error boundary at app level",
+            "Error states for failed API calls",
+            "Retry buttons on errors"
+          ],
+          "behavior": [
+            "Errors caught and displayed gracefully",
+            "Users can retry failed actions",
+            "Console logs error details for debugging"
+          ],
+          "stepsToReproduce": [
+            "Simulate network error",
+            "Verify error message displayed",
+            "Verify retry button appears",
+            "Click retry, verify request retried"
+          ]
+        },
+        {
+          "id": "7.4",
+          "name": "Accessibility Audit",
+          "source": "ui-ux-plan.md",
+          "priority": "high",
+          "dependencies": ["6.1", "6.2", "6.3"],
+          "passed": false,
+          "expectedOutput": [
+            "WCAG 2.1 AA compliance",
+            "Keyboard navigation complete",
+            "Screen reader tested",
+            "Color contrast verified"
+          ],
+          "behavior": [
+            "All interactive elements keyboard accessible",
+            "Focus indicators visible",
+            "ARIA labels on custom components",
+            "No color-only information"
+          ],
+          "stepsToReproduce": [
+            "Run axe-core audit",
+            "Fix any violations",
+            "Tab through all interactive elements",
+            "Verify focus ring visible",
+            "Test with VoiceOver/NVDA",
+            "Verify all content announced correctly"
+          ]
+        },
+        {
+          "id": "7.5",
+          "name": "Performance Optimization",
+          "source": "frontend-plan.md",
+          "priority": "medium",
+          "dependencies": ["6.1", "6.2", "6.3"],
+          "passed": false,
+          "expectedOutput": [
+            "Initial JS < 100KB",
+            "Lighthouse performance > 90",
+            "MapLibre lazy loaded (~300KB)"
+          ],
+          "behavior": [
+            "Fast initial load",
+            "Map loads on demand",
+            "No unnecessary re-renders"
+          ],
+          "stepsToReproduce": [
+            "Run Lighthouse audit",
+            "Verify performance score > 90",
+            "Check network tab for initial bundle size",
+            "Verify MapLibre loads only when map visible",
+            "Use React DevTools Profiler",
+            "Verify no unnecessary re-renders"
+          ]
+        },
+        {
+          "id": "7.6",
+          "name": "Responsive Design Testing",
+          "source": "ui-ux-plan.md",
+          "priority": "high",
+          "dependencies": ["6.1", "6.2", "6.3"],
+          "passed": false,
+          "expectedOutput": [
+            "Mobile (< 640px): Single column, bottom nav",
+            "Tablet (640-1024px): Split view",
+            "Desktop (> 1024px): Full split view"
+          ],
+          "behavior": [
+            "Layout adapts to screen size",
+            "Touch targets 44x44px minimum",
+            "No horizontal scroll"
+          ],
+          "stepsToReproduce": [
+            "Test at 375px width (iPhone SE)",
+            "Verify single column layout",
+            "Verify bottom navigation",
+            "Test at 768px width (iPad)",
+            "Verify split view",
+            "Test at 1280px width",
+            "Verify full desktop layout"
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTasks": 42,
+    "passed": 13,
+    "failed": 0,
+    "pending": 29,
+    "byPriority": {
+      "critical": 9,
+      "high": 28,
+      "medium": 5,
+      "low": 0
+    }
+  }
+}
